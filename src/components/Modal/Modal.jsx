@@ -22,15 +22,6 @@ export const Modal = ({ onClose, children }) => {
     };
   }, [onClose]); // ? чому воно хоче додати залежність від presEsc? Працює і без цього. onClose теж попросив React додати в залежності.
 
-  // componentDidMount() {
-  //   // Для закриття модалки по ESC:
-  //   window.addEventListener('keydown', this.presEsc);
-  // }
-
-  // componentWillUnmount() {
-  //   window.removeEventListener('keydown', this.presEsc);
-  // }
-
   // Закриття модалки по кліку на бекдропі
   const backdropClick = e => {
     if (e.target === e.currentTarget) {

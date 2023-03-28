@@ -3,7 +3,7 @@ import './styles.css';
 import { ToastContainer } from 'react-toastify'; // повідомлення
 import 'react-toastify/dist/ReactToastify.css'; // стилі повідомлень
 
-// import { Searchbar } from './Searchbar/Searchbar';
+import { Searchbar } from './Searchbar/Searchbar';
 // import { useState } from 'react';
 // import { ImageGallery } from './ImageGallery/ImageGallery';
 
@@ -16,10 +16,14 @@ export const App = () => {
   //   setRequest(requestValue);
   // };
 
+  function onSubmit() {
+    console.log('object');
+  }
+
   return (
     <>
       {/* Форма пошуку: */}
-      {/* <Searchbar onSubmit={onSubmit} /> */}
+      <Searchbar onSubmit={onSubmit} />
 
       {/* Галерея зображень */}
       {/* <ImageGallery request={request}></ImageGallery> */}
