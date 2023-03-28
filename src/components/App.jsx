@@ -1,10 +1,10 @@
 import './styles.css';
 
-// import { ToastContainer } from 'react-toastify'; // повідомлення
-// import 'react-toastify/dist/ReactToastify.css'; // стилі повідомлень
+import { ToastContainer } from 'react-toastify'; // повідомлення
+import 'react-toastify/dist/ReactToastify.css'; // стилі повідомлень
 
 // import { Searchbar } from './Searchbar/Searchbar';
-import { useState } from 'react';
+// import { useState } from 'react';
 // import { ImageGallery } from './ImageGallery/ImageGallery';
 
 // * Рефакторінг в Хуки
@@ -25,7 +25,7 @@ export const App = () => {
       {/* <ImageGallery request={request}></ImageGallery> */}
 
       {/* Контейнер для повідомлень: */}
-      {/* <ToastContainer newestOnTop={true} autoClose={4000} /> */}
+      <ToastContainer newestOnTop={true} autoClose={4000} />
     </>
   );
 };
