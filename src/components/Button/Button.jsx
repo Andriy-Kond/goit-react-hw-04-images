@@ -1,4 +1,5 @@
 import PropTypes from 'prop-types';
+
 export const Button = ({ loadMoreBtn, isDisabledBtn }) => {
   return (
     <button className="Button" onClick={loadMoreBtn} disabled={isDisabledBtn}>
