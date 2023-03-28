@@ -15,7 +15,7 @@ export const App = () => {
   // const onSubmit = requestValue => {
   //   setRequest(requestValue);
   // };
-  const request = 'cat';
+  // const request = 'cat';
   function onSubmit() {
     console.log('object');
   }
