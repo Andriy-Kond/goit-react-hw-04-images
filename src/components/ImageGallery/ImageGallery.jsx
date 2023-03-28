@@ -1,5 +1,5 @@
 import { ImageGalleryItem } from 'components/ImageGalleryItem/ImageGalleryItem';
-import { useEffect, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { toast } from 'react-toastify'; // повідомлення
 import { Loader } from 'components/Loader/Loader'; // спінер
 import { Button } from 'components/Button/Button'; // кнопка Load More
@@ -7,7 +7,7 @@ import PropTypes from 'prop-types';
 import { getFetch } from 'components/services/getFetch';
 
 // * Рефакторінг в Хуки
-export const ImageGallery = ({ request }) => {
+export const ImageGallery = ({ request = '' }) => {
   const [data, setData] = useState([]);
   const [error, setError] = useState(null);
   const [status, setStatus] = useState('');
@@ -17,16 +17,13 @@ export const ImageGallery = ({ request }) => {
   const [isLoading, setIsLoading] = useState(false); // схований спінер
   const [perPage] = useState(12); // Для зручності зміни кількості карток на сторінці
 
-  // Якщо запит змінився, то скидаю state і роблю запит на першу сторінку:
-  useEffect(() => {
-    if (request) {
-      setData([]);
-      setPage(1);
-      setIsShownBtn(false);
+  // Перший запит:
+  const lastRequest = useRef(request); // записую туди значення з request
+  const lastPage = useRef(page);
 
-      // getQuery(page);
-    }
-  }, [request]); // ? чому воно хоче додати залежність від getQuery?
+  // Чи змінився запит?
+  const isRequestChanged = request !== lastRequest.current;
+  const isPageChanged = page !== lastPage.current;
 
   // Якщо запит не змінився, а сторінка змінилась (була натиснута кнопка Load More), то роблю запит
   useEffect(() => {
@@ -77,8 +74,25 @@ export const ImageGallery = ({ request }) => {
         });
     };
 
-    request && getQuery(page);
-  }, [page, perPage]); // ? чому воно хоче додати залежність від getQuery?
+    // Якщо запит є (не пустий)
+    if (request) {
+      // console.log(' Зявився якийсь не пустий запит ');
+      // Якщо запит змінився, то очищую дані і перезаписую значення у посиланні
+      if (isRequestChanged) {
+        // console.log('запит змінився');
+        lastRequest.current = request; // записую новий запит у посилання
+        setData([]);
+        setPage(1);
+        setIsShownBtn(false);
+        getQuery(1);
+      }
+      // Якщо запит не змінився, то перевіряю сторінку
+      else if (isPageChanged) {
+        getQuery(page);
+        // console.log('page = якась там...');
+      }
+    }
+  }, [isPageChanged, isRequestChanged, page, perPage, request]); // ? чому воно хоче додати залежність від getQuery?
 
   // * Функція кнопки LoadMore
   const loadMoreBtnClick = () => {
