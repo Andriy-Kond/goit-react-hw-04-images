@@ -1,4 +1,3 @@
-// коммент
 import PropTypes from 'prop-types';
 
 export const Button = ({ loadMoreBtn, isDisabledBtn }) => {

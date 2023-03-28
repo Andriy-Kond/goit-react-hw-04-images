@@ -2,7 +2,6 @@ import { ImageGalleryItem } from 'components/ImageGalleryItem/ImageGalleryItem';
 import { useEffect, useState } from 'react';
 import { toast } from 'react-toastify'; // повідомлення
 import { Loader } from 'components/Loader/Loader'; // спінер
-// коммент
 import { Button } from 'components/Button/Button'; // кнопка Load More
 import PropTypes from 'prop-types';
 import { getFetch } from 'components/services/getFetch';

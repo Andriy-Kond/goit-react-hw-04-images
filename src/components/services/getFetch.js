@@ -1,4 +1,3 @@
-// коммент
 export const getFetch = (request, currentPage, perPage) => {
   const URL_CONST = 'https://pixabay.com/api/';
   // Клас URLSearchParams:
