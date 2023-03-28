@@ -5,7 +5,7 @@ import 'react-toastify/dist/ReactToastify.css'; // стилі повідомле
 
 import { Searchbar } from './Searchbar/Searchbar';
 // import { useState } from 'react';
-import { ImageGallery } from './ImageGallery/ImageGallery';
+// import { ImageGallery } from './ImageGallery/ImageGallery';
 
 // * Рефакторінг в Хуки
 export const App = () => {
@@ -26,7 +26,7 @@ export const App = () => {
       <Searchbar onSubmit={onSubmit} />
 
       {/* Галерея зображень */}
-      <ImageGallery request={request}></ImageGallery>
+      {/* <ImageGallery request={request}></ImageGallery> */}
 
       {/* Контейнер для повідомлень: */}
       <ToastContainer newestOnTop={true} autoClose={4000} />
