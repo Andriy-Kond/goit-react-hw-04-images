@@ -24,61 +24,62 @@ export const ImageGallery = ({ request }) => {
       setPage(1);
       setIsShownBtn(false);
 
-      // getQuery(page);
+      getQuery(1);
     }
   }, [request]); // ? чому воно хоче додати залежність від getQuery?
 
   // Якщо запит не змінився, а сторінка змінилась (була натиснута кнопка Load More), то роблю запит
   useEffect(() => {
-    // * Функція запиту
-    const getQuery = currentPage => {
-      // setIsDisabledBtn(true); //  деактивую кнопку Load More, щоби не було випадкового кліку
-      setIsShownBtn(false); //  ховаю кнопку Load More
-      setIsLoading(true); // показую спінер
+    // page !== prevState.page &&
+    page !== 1 && getQuery(page);
+  }, [page]); // ? чому воно хоче додати залежність від getQuery?
 
-      getFetch(request, currentPage, perPage)
-        // Отримую дані від серверу (масив об'єктів)
-        .then(({ totalHits, hits }) => {
-          // Якщо нічого не знайдено, то виходжу
-          if (totalHits === 0) {
-            return toast.info(`Відсутні зображення за запитом "${request}"`);
-          }
+  // * Функція запиту
+  const getQuery = currentPage => {
+    // setIsDisabledBtn(true); //  деактивую кнопку Load More, щоби не було випадкового кліку
+    setIsShownBtn(false); //  ховаю кнопку Load More
+    setIsLoading(true); // показую спінер
 
-          // показую повідомлення про кількість зображень лише при першому запиті
-          if (currentPage === 1)
-            toast.success(
-              `Знайдено ${totalHits} результат(ів) по запиту "${request}"`
-            );
+    getFetch(request, currentPage, perPage)
+      // Отримую дані від серверу (масив об'єктів)
+      .then(({ totalHits, hits }) => {
+        // Якщо нічого не знайдено, то виходжу
+        if (totalHits === 0) {
+          return toast.info(`Відсутні зображення за запитом "${request}"`);
+        }
 
-          // Оновлюю стейт
-          setData(prevState => {
-            return [...prevState, ...hits]; // старі дані + нові
-          });
-          setIsShownBtn(true); // показую кнопку Load More
-          setIsDisabledBtn(false); // активую кнопку Load More
+        // показую повідомлення про кількість зображень лише при першому запиті
+        if (currentPage === 1)
+          toast.success(
+            `Знайдено ${totalHits} результат(ів) по запиту "${request}"`
+          );
 
-          // Ховаю / Деактивую кнопку Load More, якщо кількість нових об'єктів менше ніж per_page (тобто вони закінчились на сервері)
-          if (hits.length < perPage) {
-            // setIsShownBtn(false); // якщо треба ховати
-            setIsDisabledBtn(true); // якщо треба деактивувати
-            toast.info(
-              `Це все. Більше по запиту "${request}" зображень в нас нема`
-            );
-          }
-        })
-        // Записую у state або створену помилку (якщо !res.ok), або будь-яку іншу:
-        .catch(error => {
-          setError(error);
-          setStatus('rejected');
-        })
-        .finally(() => {
-          // ховаю спінер
-          setIsLoading(false);
+        // Оновлюю стейт
+        setData(prevState => {
+          return [...prevState, ...hits]; // старі дані + нові
         });
-    };
+        setIsShownBtn(true); // показую кнопку Load More
+        setIsDisabledBtn(false); // активую кнопку Load More
 
-    request && getQuery(page);
-  }, [page, perPage, request]); // ? чому воно хоче додати залежність від getQuery?
+        // Ховаю / Деактивую кнопку Load More, якщо кількість нових об'єктів менше ніж per_page (тобто вони закінчились на сервері)
+        if (hits.length < perPage) {
+          // setIsShownBtn(false); // якщо треба ховати
+          setIsDisabledBtn(true); // якщо треба деактивувати
+          toast.info(
+            `Це все. Більше по запиту "${request}" зображень в нас нема`
+          );
+        }
+      })
+      // Записую у state або створену помилку (якщо !res.ok), або будь-яку іншу:
+      .catch(error => {
+        setError(error);
+        setStatus('rejected');
+      })
+      .finally(() => {
+        // ховаю спінер
+        setIsLoading(false);
+      });
+  };
 
   // * Функція кнопки LoadMore
   const loadMoreBtnClick = () => {
