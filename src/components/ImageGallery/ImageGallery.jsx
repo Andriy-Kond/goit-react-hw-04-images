@@ -78,7 +78,7 @@ export const ImageGallery = ({ request }) => {
     };
 
     request && getQuery(page);
-  }, [page, perPage, request]); // ? чому воно хоче додати залежність від getQuery?
+  }, [page, perPage]); // ? чому воно хоче додати залежність від getQuery?
 
   // * Функція кнопки LoadMore
   const loadMoreBtnClick = () => {
