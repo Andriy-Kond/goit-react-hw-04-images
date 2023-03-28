@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import { toast } from 'react-toastify'; // повідомлення по типу Notify
 import { FiSearch } from 'react-icons/fi'; // іконки React-Icons
+
 import PropTypes from 'prop-types';
 
 // * Рефакторінг в Хуки

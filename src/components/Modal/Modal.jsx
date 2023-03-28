@@ -6,13 +6,21 @@ const modalRoot = document.querySelector('#modal-root');
 
 // * Рефакторінг в Хуки
 export const Modal = ({ onClose, children }) => {
+  // Функція закриття модалки по ESC (просило додати в залежності, хоча і без цього працювало)
+
   useEffect(() => {
+    const presEsc = e => {
+      if (e.code === 'Escape') {
+        onClose();
+      }
+    };
+
     window.addEventListener('keydown', presEsc);
 
     return () => {
       window.removeEventListener('keydown', presEsc);
     };
-  }, []); // ? чому воно хоче додати залежність від presEsc?
+  }, [onClose]); // ? чому воно хоче додати залежність від presEsc? Працює і без цього. onClose теж попросив React додати в залежності.
 
   // componentDidMount() {
   //   // Для закриття модалки по ESC:
@@ -22,13 +30,6 @@ export const Modal = ({ onClose, children }) => {
   // componentWillUnmount() {
   //   window.removeEventListener('keydown', this.presEsc);
   // }
-
-  // Функція закриття модалки по ESC
-  const presEsc = e => {
-    if (e.code === 'Escape') {
-      onClose();
-    }
-  };
 
   // Закриття модалки по кліку на бекдропі
   const backdropClick = e => {

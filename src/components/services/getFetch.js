@@ -7,6 +7,7 @@ export const getFetch = (request, currentPage, perPage) => {
     image_type: 'photo',
     orientation: 'horizontal',
     per_page: perPage, // сторінок за один запит
+
     page: currentPage, // сторінка у state (змінюється кнопкою Load More, або скидається новим запитом)
   });
 

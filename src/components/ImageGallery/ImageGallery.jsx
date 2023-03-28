@@ -15,7 +15,7 @@ export const ImageGallery = ({ request }) => {
   const [isShownBtn, setIsShownBtn] = useState(false); // схована кнопка Load More
   const [isDisabledBtn, setIsDisabledBtn] = useState(true); // деактивована кнопка Load More
   const [isLoading, setIsLoading] = useState(false); // схований спінер
-  const [perPage, setPerPage] = useState(12);
+  const [perPage, setPerPage] = useState(12); // Для зручності зміни кількості карток на сторінці
 
   // Якщо запит змінився, то скидаю state і роблю запит на першу сторінку:
   useEffect(() => {
