@@ -18,21 +18,21 @@ export const ImageGallery = ({ request }) => {
   const [perPage, setPerPage] = useState(12); // Для зручності зміни кількості карток на сторінці
 
   // Якщо запит змінився, то скидаю state і роблю запит на першу сторінку:
-  // useEffect(() => {
-  //   if (request) {
-  //     setData([]);
-  //     setPage(1);
-  //     setIsShownBtn(false);
+  useEffect(() => {
+    if (request) {
+      setData([]);
+      setPage(1);
+      setIsShownBtn(false);
 
-  //     getQuery(1);
-  //   }
-  // }, [request]); // ? чому воно хоче додати залежність від getQuery?
+      getQuery(1);
+    }
+  }, [request]); // ? чому воно хоче додати залежність від getQuery?
 
-  // // Якщо запит не змінився, а сторінка змінилась (була натиснута кнопка Load More), то роблю запит
-  // useEffect(() => {
-  //   // page !== prevState.page &&
-  //   page !== 1 && getQuery(page);
-  // }, [page]); // ? чому воно хоче додати залежність від getQuery?
+  // Якщо запит не змінився, а сторінка змінилась (була натиснута кнопка Load More), то роблю запит
+  useEffect(() => {
+    // page !== prevState.page &&
+    page !== 1 && getQuery(page);
+  }, [page]); // ? чому воно хоче додати залежність від getQuery?
 
   // * Функція запиту
   const getQuery = currentPage => {

@@ -19,10 +19,10 @@ export const App = () => {
   return (
     <>
       {/* Форма пошуку: */}
-      <Searchbar onSubmit={onSubmit} />
+      {/* <Searchbar onSubmit={onSubmit} /> */}
 
       {/* Галерея зображень */}
-      <ImageGallery request={request}></ImageGallery>
+      {/* <ImageGallery request={request}></ImageGallery> */}
 
       {/* Контейнер для повідомлень: */}
       <ToastContainer newestOnTop={true} autoClose={4000} />
