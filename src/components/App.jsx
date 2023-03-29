@@ -38,8 +38,6 @@ export const App = () => {
             request={request}
             setData={setData}
             setPage={setPage}
-            page={page}
-            data={data}
           ></ImageGallery>
 
           {/* Контейнер для повідомлень: */}
