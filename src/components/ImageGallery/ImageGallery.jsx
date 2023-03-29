@@ -5,13 +5,13 @@ import { Loader } from 'components/Loader/Loader'; // спінер
 import { Button } from 'components/Button/Button'; // кнопка Load More
 import PropTypes from 'prop-types';
 import { getFetch } from 'components/services/getFetch';
-import { useContext } from 'react';
-import { DataContext, PageContext } from 'components/App';
+import { useCustomDataContext, useCustomPageContext } from 'Context/Context';
 
 // * Рефакторінг в Хуки
 export const ImageGallery = ({ request }) => {
-  const { page, setPage } = useContext(PageContext);
-  const { data, setData } = useContext(DataContext);
+  // const { data, setData } = useContext(DataContext);
+  const { page, setPage } = useCustomPageContext;
+  const { data, setData } = useCustomDataContext;
 
   // const [data, setData] = useState([]);
   // const [page, setPage] = useState(1);
