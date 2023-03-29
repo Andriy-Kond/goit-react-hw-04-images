@@ -10,8 +10,10 @@ import { DataContext, PageContext } from 'components/App';
 
 // * Рефакторінг в Хуки
 export const ImageGallery = ({ request, setData, setPage }) => {
-  const page = useContext(PageContext);
-  const data = useContext(DataContext);
+  const pageContext = useContext(PageContext);
+  const dataContext = useContext(DataContext);
+  const page = pageContext.page;
+  const data = dataContext.data;
   // const [data, setData] = useState([]);
   // const [page, setPage] = useState(1);
   const [error, setError] = useState(null);

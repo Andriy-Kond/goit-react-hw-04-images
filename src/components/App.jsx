@@ -27,8 +27,14 @@ export const App = () => {
   };
 
   return (
-    <PageContext.Provider value={page}>
-      <DataContext.Provider value={data}>
+    // В value можна передати як одне значення, так і об'єкт зі значенням і функцією
+
+    // Передача лише значення (функцію доведеться прокидувати пропсами як зазвичай):
+    // <DataContext.Provider value={data}>
+
+    // Передача об'єктом:
+    <PageContext.Provider value={{ page: page, setPage: setPage }}>
+      <DataContext.Provider value={{ data, setData }}>
         <>
           {/* Форма пошуку: */}
           <Searchbar onSubmit={onSubmit} />
