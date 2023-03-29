@@ -1,5 +1,5 @@
 import { ImageGalleryItem } from 'components/ImageGalleryItem/ImageGalleryItem';
-import { useEffect, useRef, useState } from 'react';
+import { useEffect, useState } from 'react';
 import { toast } from 'react-toastify'; // повідомлення
 import { Loader } from 'components/Loader/Loader'; // спінер
 import { Button } from 'components/Button/Button'; // кнопка Load More
