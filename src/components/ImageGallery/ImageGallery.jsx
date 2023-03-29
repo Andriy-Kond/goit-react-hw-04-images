@@ -74,24 +74,24 @@ export const ImageGallery = ({ request = '' }) => {
         });
     };
 
-    // Якщо запит є (не пустий)
-    if (request) {
-      // console.log(' Зявився якийсь не пустий запит ');
-      // Якщо запит змінився, то очищую дані і перезаписую значення у посиланні
-      if (isRequestChanged) {
-        // console.log('запит змінився');
-        lastRequest.current = request; // записую новий запит у посилання
-        setData([]);
-        setPage(1);
-        setIsShownBtn(false);
-        getQuery(1);
-      }
-      // Якщо запит не змінився, то перевіряю сторінку
-      else if (isPageChanged) {
-        getQuery(page);
-        // console.log('page = якась там...');
-      }
+    // Якщо запит є (не пустий) - вже не потрібно, працює і так
+    // if (request) {
+    // console.log(' Зявився якийсь не пустий запит ');
+    // Якщо запит змінився, то очищую дані і перезаписую значення у посиланні
+    if (isRequestChanged) {
+      // console.log('запит змінився');
+      lastRequest.current = request; // записую новий запит у посилання
+      setData([]);
+      setPage(1);
+      setIsShownBtn(false);
+      getQuery(1);
     }
+    // Якщо запит не змінився, то перевіряю сторінку
+    else if (isPageChanged) {
+      getQuery(page);
+      // console.log('page = якась там...');
+    }
+    // }
   }, [isPageChanged, isRequestChanged, page, perPage, request]); // ? чому воно хоче додати залежність від getQuery?
 
   // * Функція кнопки LoadMore
