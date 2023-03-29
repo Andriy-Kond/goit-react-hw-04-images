@@ -8,8 +8,8 @@ import { Searchbar } from './Searchbar/Searchbar';
 import { useState } from 'react';
 import { ImageGallery } from './ImageGallery/ImageGallery';
 
-export const dataContext = React.createContext();
-export const pageContext = React.createContext();
+export const DataContext = React.createContext();
+export const PageContext = React.createContext();
 
 // * Рефакторінг в Хуки
 export const App = () => {
@@ -27,8 +27,8 @@ export const App = () => {
   };
 
   return (
-    <pageContext.Provider value={page}>
-      <dataContext.Provider value={data}>
+    <PageContext.Provider value={page}>
+      <DataContext.Provider value={data}>
         <>
           {/* Форма пошуку: */}
           <Searchbar onSubmit={onSubmit} />
@@ -45,8 +45,8 @@ export const App = () => {
           {/* Контейнер для повідомлень: */}
           <ToastContainer newestOnTop={true} autoClose={4000} />
         </>
-      </dataContext.Provider>
-    </pageContext.Provider>
+      </DataContext.Provider>
+    </PageContext.Provider>
   );
 };
 

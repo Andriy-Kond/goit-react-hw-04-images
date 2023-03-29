@@ -5,9 +5,13 @@ import { Loader } from 'components/Loader/Loader'; // спінер
 import { Button } from 'components/Button/Button'; // кнопка Load More
 import PropTypes from 'prop-types';
 import { getFetch } from 'components/services/getFetch';
+import { useContext } from 'react';
+import { DataContext, PageContext } from 'components/App';
 
 // * Рефакторінг в Хуки
-export const ImageGallery = ({ request, setData, setPage, page, data }) => {
+export const ImageGallery = ({ request, setData, setPage }) => {
+  const page = useContext(PageContext);
+  const data = useContext(DataContext);
   // const [data, setData] = useState([]);
   // const [page, setPage] = useState(1);
   const [error, setError] = useState(null);
@@ -16,12 +20,6 @@ export const ImageGallery = ({ request, setData, setPage, page, data }) => {
   const [isDisabledBtn, setIsDisabledBtn] = useState(true); // деактивована кнопка Load More
   const [isLoading, setIsLoading] = useState(false); // схований спінер
   const [perPage] = useState(12); // Для зручності зміни кількості карток на сторінці
-
-  // // Скидання даних при новому запиті
-  // const resetData = () => {
-  //   // setData([]);
-  //   // setPage(1);
-  // };
 
   // // Перший запит:
   // const lastRequest = useRef(request); // записую туди значення з request
