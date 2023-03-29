@@ -40,11 +40,7 @@ export const App = () => {
           <Searchbar onSubmit={onSubmit} />
 
           {/* Галерея зображень */}
-          <ImageGallery
-            request={request}
-            setData={setData}
-            setPage={setPage}
-          ></ImageGallery>
+          <ImageGallery request={request}></ImageGallery>
 
           {/* Контейнер для повідомлень: */}
           <ToastContainer newestOnTop={true} autoClose={4000} />
