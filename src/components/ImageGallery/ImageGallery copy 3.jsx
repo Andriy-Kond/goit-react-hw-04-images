@@ -7,63 +7,60 @@ import PropTypes from 'prop-types';
 import { getFetch } from 'components/services/getFetch';
 
 // * Рефакторінг в Хуки
-export const ImageGallery = ({ request, setData, setPage, page, data }) => {
-  // const [data, setData] = useState([]);
-  // const [page, setPage] = useState(1);
+export const ImageGallery = ({
+  request,
+  page,
+  loadMoreBtnClick,
+  currentData,
+}) => {
   const [error, setError] = useState(null);
   const [status, setStatus] = useState('');
+  // const [page, setPage] = useState(1);
+  let data = useRef(currentData);
+  function setData(prevState, hits) {
+    return [...prevState, ...hits]; // старі дані + нові
+  }
+
+  // const [data, setData] = useState([currentData]);
   const [isShownBtn, setIsShownBtn] = useState(false); // схована кнопка Load More
   const [isDisabledBtn, setIsDisabledBtn] = useState(true); // деактивована кнопка Load More
   const [isLoading, setIsLoading] = useState(false); // схований спінер
   const [perPage] = useState(12); // Для зручності зміни кількості карток на сторінці
 
-  // // Скидання даних при новому запиті
-  // const resetData = () => {
-  //   // setData([]);
-  //   // setPage(1);
-  // };
-
-  // // Перший запит:
+  // Перший запит:
   // const lastRequest = useRef(request); // записую туди значення з request
   // const lastPage = useRef(page);
 
-  // // Чи змінився запит?
+  // Чи змінився запит?
   // const isRequestChanged = request !== lastRequest.current;
   // const isPageChanged = page !== lastPage.current;
-
-  // * Функція кнопки LoadMore
-  const loadMoreBtnClick = () => setPage(prevState => prevState + 1);
 
   // Якщо запит не змінився, а сторінка змінилась (була натиснута кнопка Load More), то роблю запит
   useEffect(() => {
     console.log('запуск функції useEffect :>> ');
 
     // * Функція запиту
-    const getQuery = (currentPage, currentRequest) => {
+    const getQuery = currentPage => {
       // setIsDisabledBtn(true); //  деактивую кнопку Load More, щоби не було випадкового кліку
       setIsShownBtn(false); //  ховаю кнопку Load More
       setIsLoading(true); // показую спінер
 
-      getFetch(currentRequest, currentPage, perPage)
+      getFetch(request, currentPage, perPage)
         // Отримую дані від серверу (масив об'єктів)
         .then(({ totalHits, hits }) => {
           // Якщо нічого не знайдено, то виходжу
           if (totalHits === 0) {
-            return toast.info(
-              `Відсутні зображення за запитом "${currentRequest}"`
-            );
+            return toast.info(`Відсутні зображення за запитом "${request}"`);
           }
 
           // показую повідомлення про кількість зображень лише при першому запиті
           if (currentPage === 1)
             toast.success(
-              `Знайдено ${totalHits} результат(ів) по запиту "${currentRequest}"`
+              `Знайдено ${totalHits} результат(ів) по запиту "${request}"`
             );
 
           // Оновлюю стейт
-          setData(prevState => {
-            return [...prevState, ...hits]; // старі дані + нові
-          });
+          data.current = setData(data, hits);
           setIsShownBtn(true); // показую кнопку Load More
           setIsDisabledBtn(false); // активую кнопку Load More
 
@@ -72,7 +69,7 @@ export const ImageGallery = ({ request, setData, setPage, page, data }) => {
             // setIsShownBtn(false); // якщо треба ховати
             setIsDisabledBtn(true); // якщо треба деактивувати
             toast.info(
-              `Це все. Більше по запиту "${currentRequest}" зображень в нас нема`
+              `Це все. Більше по запиту "${request}" зображень в нас нема`
             );
           }
         })
@@ -88,27 +85,28 @@ export const ImageGallery = ({ request, setData, setPage, page, data }) => {
     };
 
     // Якщо запит є (не пустий) - вже не потрібно, бо додався else if нижче
-    // if (request) {
-    // console.log(' Зявився якийсь не пустий запит ');
-    // Якщо запит змінився, то очищую дані і перезаписую значення у посиланні
-    // if (isRequestChanged) {
-    // console.log('запит змінився, все обнуляю');
-    // lastRequest.current = request; // записую новий запит у посилання
+    if (request) {
+      // console.log(' Зявився якийсь не пустий запит ');
+      // Якщо запит змінився, то очищую дані і перезаписую значення у посиланні
+      // if (isRequestChanged) {
+      //   console.log('запит змінився, все обнуляю');
+      //   lastRequest.current = request; // записую новий запит у посилання
 
-    // Більш правильний варіант - винести наступні три рядки у функцію submmit форми. Тоді не треба буде додавати перевірку сюди і функція не буде запускатися зайвий раз.
+      //   // Більш правильний варіант - винести наступні три рядки у функцію submmit форми. Тоді не треба буде додавати перевірку сюди і функція не буде запускатися зайвий раз.
+      //   // setData([]);
+      //   // setPage(1);
+      //   setIsShownBtn(false);
+      //   // getQuery(1);
+      // }
+      // Якщо запит не змінився, то перевіряю сторінку
+      // else if (isPageChanged) {
+      setIsShownBtn(false);
+      console.log(`Сторінка змінилась. Роблю запит по сторінці: ${page}`);
+      getQuery(page);
+      // }
+    }
+  }, [page, perPage, request]); // ? чому воно хоче додати залежність від getQuery?
 
-    // }
-    // Якщо запит не змінився, то перевіряю сторінку
-    // else if (isPageChanged) {
-    // console.log(`Сторінка змінилась. Роблю запит по сторінці: ${page}`);
-    // setIsShownBtn(false);
-    request && getQuery(page, request);
-
-    // }
-    // }
-  }, [page, perPage, request, setData]); // ? чому воно хоче додати залежність від getQuery?
-
-  // * Рендер
   if (status === 'rejected') {
     return <h1>{`Помилка: ${error.message}`}</h1>;
   }
