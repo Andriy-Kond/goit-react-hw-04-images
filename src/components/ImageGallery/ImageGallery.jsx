@@ -7,11 +7,17 @@ import PropTypes from 'prop-types';
 import { getFetch } from 'components/services/getFetch';
 import { useCustomDataContext, useCustomPageContext } from 'Context/Context';
 
+// import { DataContext, PageContext } from 'Context/Context';
+
 // * Рефакторінг в Хуки
 export const ImageGallery = ({ request }) => {
+  // Можна імпортувати так:
   // const { data, setData } = useContext(DataContext);
-  const { page, setPage } = useCustomPageContext;
-  const { data, setData } = useCustomDataContext;
+  // const { page, setPage } = useContext(PageContext);
+
+  // А можна так (менше import ... from):
+  const { data, setData } = useCustomDataContext();
+  const { page, setPage } = useCustomPageContext();
 
   // const [data, setData] = useState([]);
   // const [page, setPage] = useState(1);

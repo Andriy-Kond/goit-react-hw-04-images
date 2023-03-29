@@ -1,14 +1,14 @@
 import React, { useContext, useState } from 'react';
 
-const DataContext = React.createContext();
-const PageContext = React.createContext();
+export const DataContext = React.createContext();
+export const PageContext = React.createContext();
 
-export const useCustomPageContext = () => {
-  return useContext(PageContext);
-};
-
+// Власні контенти (щоби менше імпортувати у компонентах-приймачах):
 export const useCustomDataContext = () => {
   return useContext(DataContext);
+};
+export const useCustomPageContext = () => {
+  return useContext(PageContext);
 };
 
 export const Context = ({ children }) => {
