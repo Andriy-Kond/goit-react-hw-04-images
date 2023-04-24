@@ -21,10 +21,10 @@ export const Context = ({ children }) => {
     // <DataContext.Provider value={data}>
 
     // Передача об'єктом:
-    <DataContext.Provider value={{ data, setData }}>
+    <DataConttext.Provider value={{ data, setData }}>
       <PageContext.Provider value={{ page: page, setPage: setPage }}>
         {children}
       </PageContext.Provider>
-    </DataContext.Provider>
+    </DataConttext.Provider>
   );
 };
