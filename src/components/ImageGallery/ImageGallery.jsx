@@ -41,7 +41,7 @@ export const ImageGallery = ({ request }) => {
 
   // Якщо запит не змінився, а сторінка змінилась (була натиснута кнопка Load More), то роблю запит
   useEffect(() => {
-    console.log('запуск функції useEffect :>> ');
+    // console.log('запуск функції useEffect :>> ');
 
     // * Функція запиту
     const getQuery = (currentPage, currentRequest) => {
